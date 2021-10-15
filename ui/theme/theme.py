@@ -12,9 +12,17 @@ class Theme:
             ThemeProperty.SECONDARY_BUTTON: ""
         }
 
+        self.load_from_file(file_path)
+
     def load_from_file(self, file_path):
         with open(file_path, 'r') as file:
             data = toml.loads(file.read())
+
+        meta = data.get("meta")
+        self.name = meta.get("name")
+        self.author = meta.get("author")
+        self.description = meta.get("description")
+        self.version = meta.get("version")
 
         for simple_key in data.get("colors").keys():
             full_key = f"colors.{simple_key}"
