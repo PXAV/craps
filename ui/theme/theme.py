@@ -4,9 +4,12 @@ from theme_properties import ThemeProperty
 
 class Theme:
 
-    def __init__(self, name: str):
-        self.name = name
-        self.data = None
+    def __init__(self, file_path: str):
+        self.name = None
+        self.author = None
+        self.description = None
+        self.version = None
+
         self.properties = {
             ThemeProperty.PRIMARY_BUTTON: "",
             ThemeProperty.SECONDARY_BUTTON: ""
