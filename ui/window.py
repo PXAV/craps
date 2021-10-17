@@ -1,12 +1,15 @@
 from tkinter import *
+from ui.theme.theme_repository import current_theme
+from ui.theme.theme_properties import ThemeProperty
 
 
-class Window:
+class Window(Tk):
 
-    def __init__(self, height=400, width=800):
-        self.root = Tk()
-        self.height = height
-        self.width = width
+    def __init__(self, screen_name: str, width=1200, height=800):
+        super().__init__()
+        self.config(background=current_theme.get_color(ThemeProperty.PRIMARY_BACKGROUND))
+        self.geometry(f"{width}x{height}")
+        self.title(screen_name)
 
     def open(self):
         self.root.mainloop()
