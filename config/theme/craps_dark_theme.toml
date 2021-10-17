@@ -1,0 +1,12 @@
+[meta]
+name = "Craps Dark"
+author = "pxav"
+version = "1.0"
+description = "Simple dark theme for craps"
+
+[colors]
+primary_text = "#000000"
+secondary_text = "#ffffff"
+
+primary_button = "#326da8"
+secondary_button = "#232b33"
