@@ -33,4 +33,4 @@ def load_preferences():
         preferences[UserPreference.THEME] = "Craps Dark" if darkdetect.isDark() else "Craps Light"
 
     # finally apply the selected theme
-    set_current_theme(all_themes.get(preferences[UserPreference.THEME]))
+    set_current_theme(all_themes.get(preferences[UserPreference.THEME]).name)
