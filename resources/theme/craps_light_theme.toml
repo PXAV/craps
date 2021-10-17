@@ -5,6 +5,8 @@ version = "1.0"
 description = "Simple light theme for craps"
 
 [colors]
+primary_background = "#ffffff"
+
 primary_text = "#000000"
 secondary_text = "#ffffff"
 

@@ -2,6 +2,8 @@ from enum import Enum
 
 
 class ThemeProperty(Enum):
+    PRIMARY_BACKGROUND = "colors.primary_background"
+
     PRIMARY_TEXT = 'colors.primary_text'
     SECONDARY_TEXT = 'colors.secondary_text'
 
