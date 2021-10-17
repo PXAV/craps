@@ -1,5 +1,5 @@
 import toml
-from theme_properties import ThemeProperty
+from ui.theme.theme_properties import ThemeProperty
 
 
 class Theme:
@@ -11,10 +11,13 @@ class Theme:
         self.version = None
 
         self.properties = {
+            ThemeProperty.PRIMARY_TEXT: "",
+            ThemeProperty.SECONDARY_TEXT: "",
             ThemeProperty.PRIMARY_BUTTON: "",
             ThemeProperty.SECONDARY_BUTTON: ""
         }
 
+        print(f"Initializing theme from {file_path}")
         self.load_from_file(file_path)
 
     def load_from_file(self, file_path):

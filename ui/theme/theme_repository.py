@@ -1,17 +1,21 @@
 from __init__ import working_directory
-from theme import Theme
+from ui.theme.theme import Theme
+from pathlib import Path
 import os
 
 all_themes = {}
 
 # get first theme in theme directory as default theme
-current_theme = Theme(os.path.join(working_directory, "config/theme")[0])
+theme_directory = Path(f"{working_directory}/config/theme/")
+current_theme = Theme(str(theme_directory / os.listdir(theme_directory)[0]))
 
 
 def load_all_themes():
-    theme_files = os.listdir(os.path.join(working_directory, "config/theme"))
+    theme_files = os.listdir(theme_directory)
+    print(theme_files)
     for current_file in theme_files:
-        new_theme = Theme(current_file)
+        print(f'Loading theme from {theme_directory / current_file}')
+        new_theme = Theme(str(theme_directory / current_file))
         all_themes[new_theme.name] = new_theme
 
 
