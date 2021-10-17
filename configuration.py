@@ -1,1 +1,1 @@
-preference_file = 'config/user_preferences.toml'
+preference_file = 'resources/user_preferences.toml'

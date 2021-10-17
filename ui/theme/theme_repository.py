@@ -6,7 +6,7 @@ import os
 all_themes = {}
 
 # get first theme in theme directory as default theme
-theme_directory = Path(f"{working_directory}/config/theme/")
+theme_directory = Path(f"{working_directory}/resources/theme/")
 current_theme = Theme(str(theme_directory / os.listdir(theme_directory)[0]))
 
 
