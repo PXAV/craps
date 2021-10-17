@@ -22,8 +22,10 @@ class CrapsButton(Canvas):
                  **kw):
         super().__init__(master, width=width, height=height, bd=0, highlightthickness=0, **kw)
         background_color = current_theme.get_color(ThemeProperty.PRIMARY_BACKGROUND)
-        self.config(background=background_color)
         button_color = current_theme.get_color(ThemeProperty.PRIMARY_BUTTON) if primary else current_theme.get_color(ThemeProperty.SECONDARY_BUTTON)
+
+        self.config(background=background_color)
+
         image = Image.new(
             "RGB",
             (width, height),
@@ -31,10 +33,15 @@ class CrapsButton(Canvas):
         )
         draw = ImageDraw.Draw(image)
         draw.rounded_rectangle((0, 0, width, height), radius=17, fill=button_color)
+
         if text is not None and text is not "":
             font_to_load = normal_font
+            if text_type == "thin":
+                font_to_load = thin_font
+            elif text_type == "bold":
+                font_to_load = bold_font
             draw.text((width / 8, height / 3), text, fill="white", font=ImageFont.truetype(
-                font=str(Path(f"{working_directory}/{normal_font}")),
+                font=str(Path(f"{working_directory}/{font_to_load}")),
                 size=text_size)
             )
         self.img = ImageTk.PhotoImage(image)
