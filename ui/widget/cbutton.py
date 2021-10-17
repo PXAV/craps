@@ -38,9 +38,13 @@ class CrapsButton(Canvas):
                 size=text_size)
             )
         self.img = ImageTk.PhotoImage(image)
-        self.bind("<Button-1>", callback)
-        # self.focus_set() to set keyboard focus and listen for key events
-        # self.bind("<Key>", callback)
+
+        if callback is not None:
+            self.callback = callback
+            self.bind("<Button-1>", self.on_clicked())
+
+    def on_clicked(self):
+        self.callback()
 
     def show(self, *args, **kwargs):
         self.pack(*args, **kwargs)
