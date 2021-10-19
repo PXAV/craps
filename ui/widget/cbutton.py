@@ -53,10 +53,13 @@ class CrapsButton(Canvas):
     def on_clicked(self):
         self.callback()
 
-    def show(self, *args, **kwargs):
+    def show_pack(self, *args, **kwargs):
         self.pack(*args, **kwargs)
         self.create_image(int(self["width"]) / 2, int(self["height"]) / 2, image=self.img)
 
+    def show_grid(self, *args, **kwargs):
+        self.grid(*args, **kwargs)
+        self.create_image(int(self["width"]) / 2, int(self["height"]) / 2, image=self.img)
 
 
 
