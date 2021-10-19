@@ -47,11 +47,7 @@ class CrapsButton(Canvas):
         self.img = ImageTk.PhotoImage(image)
 
         if callback is not None:
-            self.callback = callback
-            self.bind("<Button-1>", self.on_clicked())
-
-    def on_clicked(self):
-        self.callback()
+            self.bind("<Button-1>", callback)
 
     def show_pack(self, *args, **kwargs):
         self.pack(*args, **kwargs)
