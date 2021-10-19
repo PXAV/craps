@@ -17,6 +17,7 @@ class CrapsButton(Canvas):
                  text: str = None,
                  text_size: int = 14,
                  text_type: str = "normal",  # bold, normal, thin
+                 text_align: str = "left",
                  primary: bool = True,
                  opaque: bool = True,
                  callback: callable = None,
@@ -43,7 +44,7 @@ class CrapsButton(Canvas):
                 font_to_load = thin_font
             elif text_type == "bold":
                 font_to_load = bold_font
-            draw.text((width / 8, height / 3), text, fill="white", font=ImageFont.truetype(
+            draw.text((width / 8, height / 3), text, align=text_align, fill="white", font=ImageFont.truetype(
                 font=str(Path(f"{working_directory}/{font_to_load}")),
                 size=text_size)
             )
