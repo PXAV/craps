@@ -34,7 +34,7 @@ class CrapsButton(Canvas):
         draw = ImageDraw.Draw(image)
         draw.rounded_rectangle((0, 0, width, height), radius=17, fill=button_color)
 
-        if text is not None and text is not "":
+        if text:
             font_to_load = normal_font
             if text_type == "thin":
                 font_to_load = thin_font
