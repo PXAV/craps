@@ -12,6 +12,7 @@ class Window(Tk):
         self.config(background=current_theme.get_color(ThemeProperty.PRIMARY_BACKGROUND))
         self.geometry(f"{width}x{height}")
         self.title(screen_name)
+        self.custom_grid_size = 0
 
     def open(self):
         self.root.mainloop()
