@@ -14,6 +14,7 @@ class CrapsButton(Canvas):
                  master: Tk or any = None,
                  width: int = 100,
                  height: int = 30,
+                 border_radius: int = 17,
                  text: str = None,
                  text_size: int = 14,
                  text_type: str = "normal",  # bold, normal, thin
@@ -36,7 +37,7 @@ class CrapsButton(Canvas):
         draw = ImageDraw.Draw(image)
 
         if opaque:
-            draw.rounded_rectangle((0, 0, width, height), radius=17, fill=button_color)
+            draw.rounded_rectangle((0, 0, width, height), radius=border_radius, fill=button_color)
 
         if text:
             font_to_load = normal_font
