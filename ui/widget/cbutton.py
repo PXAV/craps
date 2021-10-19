@@ -18,6 +18,7 @@ class CrapsButton(Canvas):
                  text_size: int = 14,
                  text_type: str = "normal",  # bold, normal, thin
                  primary: bool = True,
+                 opaque: bool = True,
                  callback: callable = None,
                  **kw):
         super().__init__(master, width=width, height=height, bd=0, highlightthickness=0, **kw)
@@ -32,7 +33,9 @@ class CrapsButton(Canvas):
             background_color
         )
         draw = ImageDraw.Draw(image)
-        draw.rounded_rectangle((0, 0, width, height), radius=17, fill=button_color)
+
+        if opaque:
+            draw.rounded_rectangle((0, 0, width, height), radius=17, fill=button_color)
 
         if text:
             font_to_load = normal_font
