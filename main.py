@@ -2,7 +2,7 @@ from ui.window import Window
 
 from storage.user_preferences import load_preferences
 from ui.theme.theme_repository import load_all_themes
-from ui.main_menu import open_main_menu
+from ui.menu_views import open_main_menu
 
 
 if __name__ == '__main__':
