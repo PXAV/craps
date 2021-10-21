@@ -7,7 +7,7 @@ description = "Simple dark theme for craps"
 [colors]
 primary_background = "#222222"
 
-primary_text = "#000000"
+primary_text = "#ffffff"
 secondary_text = "#ffffff"
 
 primary_button = "#326da8"

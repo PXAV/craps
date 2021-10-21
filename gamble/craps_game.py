@@ -22,10 +22,12 @@ def __initial_dice(window: Window):
     second_init_dice.update_text(f"{second}")
     result_init.update_text(f"{dice_sum}")
 
-
-
-
-    window.update()
+    if dice_sum == 7 or dice_sum == 11:
+        dice_button.update_text("YOU WIN!")
+    elif dice_sum == 3 or dice_sum == 3 or dice_sum == 12:
+        dice_button.update_text("YOU LOSE!")
+    else:
+        dice_button.update_text("DRAW!")
 
 
 def start_game(window: Window):
