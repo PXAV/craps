@@ -15,30 +15,28 @@ class DiceIndicator(Canvas):
                  master: Window = None,
                  width: int = 100,
                  height: int = 30,
-                 initial_attempts: int = 0,
+                 initial_attempts: int = 1,
+                 max_shown_attempts: int = 10,
+                 text_size: int = 26,
+                 text_align: str = "left",
+                 text_type: str = "bold",
                  **kw):
         super().__init__(master, width=width, height=height, bd=0, highlightthickness=0, **kw)
         self.window = master
         self.width = width
         self.height = height
         self.attempts = initial_attempts
+        self.max_shown_attempts = max_shown_attempts
+        self.text_align = text_align
+        self.text_type = text_type
+        self.text_size = text_size
 
         self.background_color = current_theme.get_color(ThemeProperty.PRIMARY_BACKGROUND)
-        self.button_color = current_theme.get_color(
-            ThemeProperty.PRIMARY_BUTTON) if primary else current_theme.get_color(ThemeProperty.SECONDARY_BUTTON)
-        self.update_properties(width, height,
-                               border_radius,
-                               text, text_size, text_type, text_align, text_position,
-                               primary,
-                               opaque)
+        self.update_properties(width, height, initial_attempts)
         self.config(background=self.background_color)
         self.raw_image = None
         self.photo_image = None
-        self.__draw_attempts(self.text)
-
-        # bind callback to left mouse button click
-        if callback is not None:
-            self.bind("<Button-1>", callback)
+        self.__draw_attempts()
 
     def show_pack(self, *args, **kwargs):
         self.pack(*args, **kwargs)
@@ -57,20 +55,21 @@ class DiceIndicator(Canvas):
                           attempts: int):
         self.width = width
         self.height = height
-        self.attempts = attempts
+        if attempts <= 0:
+            print("Cannot show 0 attempts or negative amount of attempts!")
+            self.attempts = 1
+        else:
+            self.attempts = attempts
         self.background_color = current_theme.get_color(ThemeProperty.PRIMARY_BACKGROUND)
-        self.button_color = current_theme.get_color(
-            ThemeProperty.PRIMARY_BUTTON) if primary else current_theme.get_color(ThemeProperty.SECONDARY_BUTTON)
 
         self.config(width=self.width)
         self.config(height=self.height)
 
-        self.__draw_attempts(self.text)
+        self.__draw_attempts()
         self.__apply_image()
         self.update()
 
-    def __draw_attempts(self, new_text):
-        self.text = new_text
+    def __draw_attempts(self):
         self.raw_image = Image.new(
             "RGB",
             (self.width, self.height),
@@ -78,25 +77,32 @@ class DiceIndicator(Canvas):
         )
         draw = ImageDraw.Draw(self.raw_image)
 
+        last_circle_location = 0
+        padding = 8
+        for indicator in range(1, self.max_shown_attempts + 1):
+            circle_color = current_theme.get_color(ThemeProperty.DICE_INDICATOR_ACTIVE)
+            if indicator > self.attempts:
+                circle_color = current_theme.get_color(ThemeProperty.SECONDARY_BACKGROUND)
+            x_position = self.height * indicator + padding * indicator
+            draw.ellipse((x_position, 0,
+                          x_position + self.height, self.height),
+                         fill=circle_color)
+            last_circle_location = x_position + self.height
 
-        if self.opaque:
-            draw.rounded_rectangle((0, 0, self.width, self.height), radius=self.border_radius, fill=self.button_color)
+        font_to_load = normal_font
+        if self.text_type == "thin":
+            font_to_load = thin_font
+        elif self.text_type == "bold":
+            font_to_load = bold_font
 
-        if self.text:
-            font_to_load = normal_font
-            if self.text_type == "thin":
-                font_to_load = thin_font
-            elif self.text_type == "bold":
-                font_to_load = bold_font
+        draw.text((last_circle_location + 20, 0, self.width, self.height),
+                  f"{self.attempts}",
+                  align=self.text_align,
+                  fill="white",
+                  font=ImageFont.truetype(
+            font=str(Path(f"{working_directory}/{font_to_load}")),
+            size=self.text_size))
 
-            xy = (self.width / 8, self.height / 3)
-            if self.text_position:
-                xy = self.text_position
-
-            draw.text(xy, self.text, align=self.text_align, fill="white", font=ImageFont.truetype(
-                font=str(Path(f"{working_directory}/{font_to_load}")),
-                size=self.text_size)
-                      )
         self.photo_image = ImageTk.PhotoImage(self.raw_image)
 
     def __apply_image(self):
