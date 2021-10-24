@@ -1,11 +1,14 @@
 from ui.window import Window
 from ui.widget.cbutton import CrapsButton
+from ui.widget.cdice_indicator import DiceIndicator
 from random import randint
 
 first_init_dice: CrapsButton = CrapsButton(master=None)
 second_init_dice: CrapsButton = CrapsButton(master=None)
 result_init: CrapsButton = CrapsButton(master=None)
 dice_button: CrapsButton = CrapsButton(master=None)
+
+dice_indicator: DiceIndicator = DiceIndicator(master=None)
 
 
 def __back_to_main_menu(window: Window):
@@ -28,6 +31,18 @@ def __initial_dice(window: Window):
         dice_button.update_text("YOU LOSE!")
     else:
         dice_button.update_text("DRAW!")
+        __initial_draw(window)
+
+
+def __initial_draw(window: Window):
+    global dice_indicator
+
+    indicator_width = first_init_dice.get_width() + second_init_dice.get_width() + result_init.get_width()
+
+    dice_indicator = DiceIndicator(master=window,
+                                   width=int(indicator_width * 2.5), height=30,
+                                   initial_attempts=1, max_shown_attempts=15)
+    dice_indicator.show_grid(column=1, row=3, columnspan=5)
 
 
 def start_game(window: Window):
