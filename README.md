@@ -3,7 +3,7 @@
 
 Craps is a popular dice game, mainly played in the USA. It is considered an adoption of the western European gambling game Hazard, whose origins are obscure. Some sources date it back to the Crusades, however it is confirmed that British colonialists brought it to the new land in about 1805. This small application allows you to play the game at home without having to go to a casino.
 
-![Craps Main Menu Screenshot](https://github.com/PXAV/craps/blob/master/resources/github/main_menu_screenshot.PNG)
+![Craps Main Menu Screenshot](https://github.com/PXAV/craps/blob/master/resources/github/main_menu_screenshot.png)
 > Example screenshot of the main menu in dark theme. Please note that this is alpha footage and everything is subject to change.
 
 ### Rules
