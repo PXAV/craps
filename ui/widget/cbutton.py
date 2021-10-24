@@ -62,6 +62,12 @@ class CrapsButton(Canvas):
         self.grid(*args, **kwargs)
         self.__apply_image()
 
+    def get_width(self) -> int:
+        return self.width
+
+    def get_height(self) -> int:
+        return self.height
+
     def update_text(self, new_text):
         self.update_properties(self.width, self.height, self.border_radius, new_text, self.text_size,
                                self.text_type, self.text_align, self.text_position, self.primary, self.opaque)
