@@ -17,3 +17,8 @@ class Window(Tk):
     def open(self):
         self.root.mainloop()
 
+    def get_height(self) -> int:
+        return self.height
+
+    def get_width(self) -> int:
+        return self.width
