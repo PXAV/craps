@@ -26,7 +26,8 @@ def open_main_menu(window: Window):
     play_button.show_grid(column=1, row=1, columnspan=2, pady=(20, 10), padx=(40, 0))
 
     stats_button = CrapsButton(master=window, width=300, height=40,
-                               text="STATISTICS")
+                               text="STATISTICS",
+                               callback=lambda event: open_statistics_page(window))
     stats_button.show_grid(column=1, row=2, columnspan=2, pady=10, padx=(40, 0))
 
     rules_button = CrapsButton(master=window, width=300, height=40,
@@ -74,6 +75,33 @@ def open_rules_menu(window: Window):
 
     window.update()
 
+
+def open_statistics_page(window: Window):
+    window.clear_widgets()
+
+    title_label = CrapsButton(master=window, width=300, height=40,
+                              text="STATISTICS", text_type="bold", text_size=26,
+                              opaque=False)
+    title_label.show_grid(column=1, row=0, columnspan=2, pady=((window.get_height() / 8), 0))
+
+    __multiline_text(window, [
+        "Rounds played: 12",
+        "  ➥ Won: 6",
+        "  ➥ Lost: 6",
+        "  ➥ Win rate: 50%",
+        "Instant wins: 2",
+        "Instant losses: 3",
+        "Average throws/round: 5",
+    ], column=1, start_row=1)
+
+    back_button = CrapsButton(master=window, width=300, height=40,
+                              text="Done",
+                              callback=lambda event: open_main_menu(window))
+    back_button.show_grid(column=1, row=9,
+                          padx=(window.get_width() / 20, 0),
+                          pady=(0, window.get_height() / 8))
+
+    window.update()
 
 def open_settings_menu(window: Window):
     window.clear_widgets()
