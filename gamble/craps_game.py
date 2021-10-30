@@ -50,18 +50,16 @@ def __initial_dice(window: Window):
 def __initial_draw(window: Window, dice_sum: int):
     global dice_indicator
 
-    indicator_width = first_init_dice.get_width() + second_init_dice.get_width() + result_init.get_width()
-
     dice_indicator = DiceIndicator(master=window,
-                                   width=int(indicator_width * 3), height=30,
+                                   width=int(window.get_width() * 0.75), height=30,
                                    initial_attempts=[dice_sum], max_shown_attempts=22)
-    dice_indicator.show_grid(column=0, row=3, columnspan=5, padx=20)
+    dice_indicator.show_grid(column=0, row=3, columnspan=4, pady=10)
 
     repeat_dice_button = CrapsButton(master=window, width=300, height=50,
                                      text="DICE", text_type="bold", text_size=30, text_position=(100, 15),
                                      border_radius=5,
                                      callback=lambda event: __repeat_dice(window))
-    repeat_dice_button.show_grid(column=0, row=5, pady=30, padx=20)
+    repeat_dice_button.show_grid(column=0, row=4, pady=30, padx=20)
 
 
 def __repeat_dice(window: Window):
@@ -94,21 +92,21 @@ def __end_game(window: Window):
                         border_radius=5,
                         opaque=False,
                         callback=lambda event: __repeat_dice(window))
-    label.show_grid(column=1, row=5, pady=30)
+    label.show_grid(column=1, row=4, pady=30)
 
     retry_button = CrapsButton(master=window, width=300, height=50,
                                text="RETRY", text_type="bold", text_size=30, text_position=(100, 15),
                                border_radius=5,
                                primary=False,
                                callback=lambda event: start_game(window))
-    retry_button.show_grid(column=0, row=6, pady=30, padx=20)
+    retry_button.show_grid(column=0, row=5, pady=30, padx=20)
 
     main_menu_button = CrapsButton(master=window, width=300, height=50,
                                    text="MAIN MENU", text_type="bold", text_size=30, text_position=(50, 15),
                                    border_radius=5,
                                    primary=False,
                                    callback=lambda event: __back_to_main_menu(window))
-    main_menu_button.show_grid(column=0, row=7, pady=30, padx=20)
+    main_menu_button.show_grid(column=0, row=6, pady=30, padx=20)
 
 
 def start_game(window: Window):
@@ -117,38 +115,38 @@ def start_game(window: Window):
 
     window.clear_widgets()
 
-    page_title = CrapsButton(master=window, width=300,
+    page_title = CrapsButton(master=window, width=150,
                              text="CRAPS", text_type="bold", text_size=26,
                              opaque=False,
                              callback=lambda event: __back_to_main_menu(window))
     page_title.show_grid(column=0, row=0, pady=20)
 
-    first_init_dice = CrapsButton(master=window, width=80, height=80,
+    first_init_dice = CrapsButton(master=window, width=100, height=80,
                                   text="?", text_type="bold", text_size=30, text_position=(30, 30),
                                   border_radius=5)
-    first_init_dice.show_grid(column=0, row=1, pady=20)
+    first_init_dice.show_grid(column=0, row=1, pady=20, padx=20)
 
-    second_init_dice = CrapsButton(master=window, width=80, height=80,
+    second_init_dice = CrapsButton(master=window, width=100, height=80,
                                    text="?", text_type="bold", text_size=30, text_position=(30, 30),
                                    border_radius=5)
-    second_init_dice.show_grid(column=2, row=1, pady=20)
+    second_init_dice.show_grid(column=2, row=1, pady=20, padx=20)
 
     CrapsButton(master=window,
-                text="+", text_type="bold", text_size=30,
+                text="+", text_type="bold", text_size=30, width=30,
                 opaque=False).show_grid(column=1, row=1, pady=20)
 
     CrapsButton(master=window,
-                text="=", text_type="bold", text_size=30,
+                text="=", text_type="bold", text_size=30, width=30,
                 opaque=False).show_grid(column=3, row=1, pady=20)
 
-    result_init = CrapsButton(master=window, width=150, height=80,
+    result_init = CrapsButton(master=window, width=100, height=80,
                               text="?", text_type="bold", text_size=30, text_position=(30, 30),
                               border_radius=15)
-    result_init.show_grid(column=4, row=1, pady=20)
+    result_init.show_grid(column=4, row=1, pady=20, padx=20)
 
-    dice_button = CrapsButton(master=window, width=200, height=40,
+    dice_button = CrapsButton(master=window, width=100 * 3, height=80,
                               text="DICE!", text_size=20,
                               callback=lambda event: __initial_dice(window))
-    dice_button.show_grid(column=2, row=2, pady=10)
+    dice_button.show_grid(column=0, columnspan=2, row=2, pady=10, padx=20)
 
     window.update()
