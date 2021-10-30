@@ -26,9 +26,9 @@ class Window(Tk):
     def configure_grid(self, columns: int, rows: int):
         self.custom_grid_rows = rows
         self.custom_grid_columns = columns
-        for row in range(rows):
+        for row in range(rows - 2):
             self.rowconfigure(row, weight=1)
-        for column in range(columns):
+        for column in range(columns - 2):
             self.columnconfigure(column, weight=1)
 
     def reset_custom_grid(self):
