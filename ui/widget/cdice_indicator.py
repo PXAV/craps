@@ -46,6 +46,9 @@ class DiceIndicator(Canvas):
         self.grid(*args, **kwargs)
         self.__apply_image()
 
+    def get_attempts(self) -> list:
+        return self.attempts
+
     def add_attempt(self, dice_sum: int):
         self.attempts.append(dice_sum)
         self.update_properties(self.width, self.height, self.attempts)
