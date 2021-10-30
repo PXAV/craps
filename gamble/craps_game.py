@@ -3,6 +3,7 @@ from ui.widget.cbutton import CrapsButton
 from ui.widget.cdice_indicator import DiceIndicator
 from gamble.game_phase import GamePhase
 from random import randint
+from storage.stats_database import add_game
 
 game_phase = GamePhase.INITIAL_DICE
 first_dice_sum: int = 0
@@ -35,11 +36,13 @@ def __initial_dice(window: Window):
 
     if first_dice_sum == 7 or first_dice_sum == 11:
         game_phase = GamePhase.END_VICTORY
+        add_game(won=True, instant=True, throws=1)
         dice_button.update_text("YOU WIN!")
         __end_game(window)
     elif first_dice_sum == 3 or first_dice_sum == 3 or first_dice_sum == 12:
         dice_button.update_text("YOU LOSE!")
         game_phase = GamePhase.END_LOSS
+        add_game(won=False, instant=True, throws=1)
         __end_game(window)
     else:
         game_phase = GamePhase.DRAW_DICE
@@ -75,9 +78,11 @@ def __repeat_dice(window: Window):
 
     if dice_sum == 7:
         game_phase = GamePhase.END_LOSS
+        add_game(won=False, instant=False, throws=len(dice_indicator.get_attempts()))
         __end_game(window)
     elif dice_sum == first_dice_sum:
         game_phase = GamePhase.END_VICTORY
+        add_game(won=True, instant=False, throws=len(dice_indicator.get_attempts()))
         __end_game(window)
 
 
