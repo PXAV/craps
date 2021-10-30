@@ -33,16 +33,18 @@ def __initial_dice(window: Window):
     second_init_dice.update_text(f"{second}")
     result_init.update_text(f"{first_dice_sum}")
 
-    # if dice_sum == 7 or dice_sum == 11:
-    #     game_phase = GamePhase.END_VICTORY
-    #     dice_button.update_text("YOU WIN!")
-    # elif dice_sum == 3 or dice_sum == 3 or dice_sum == 12:
-    #     dice_button.update_text("YOU LOSE!")
-    #     game_phase = GamePhase.END_LOSS
-    # else:
-    game_phase = GamePhase.DRAW_DICE
-    dice_button.update_text("DRAW!")
-    __initial_draw(window, first_dice_sum)
+    if first_dice_sum == 7 or first_dice_sum == 11:
+        game_phase = GamePhase.END_VICTORY
+        dice_button.update_text("YOU WIN!")
+        __end_game(window)
+    elif first_dice_sum == 3 or first_dice_sum == 3 or first_dice_sum == 12:
+        dice_button.update_text("YOU LOSE!")
+        game_phase = GamePhase.END_LOSS
+        __end_game(window)
+    else:
+        game_phase = GamePhase.DRAW_DICE
+        dice_button.update_text("DRAW")
+        __initial_draw(window, first_dice_sum)
 
 
 def __initial_draw(window: Window, dice_sum: int):
@@ -56,10 +58,10 @@ def __initial_draw(window: Window, dice_sum: int):
     dice_indicator.show_grid(column=0, row=3, columnspan=5, padx=20)
 
     repeat_dice_button = CrapsButton(master=window, width=300, height=50,
-                                     text="DICE", text_type="bold", text_size=30, text_position=(30, 30),
+                                     text="DICE", text_type="bold", text_size=30, text_position=(100, 15),
                                      border_radius=5,
                                      callback=lambda event: __repeat_dice(window))
-    repeat_dice_button.show_grid(column=0, row=5, pady=20)
+    repeat_dice_button.show_grid(column=0, row=5, pady=30, padx=20)
 
 
 def __repeat_dice(window: Window):
@@ -75,12 +77,43 @@ def __repeat_dice(window: Window):
 
     if dice_sum == 7:
         game_phase = GamePhase.END_LOSS
+        __end_game(window)
     elif dice_sum == first_dice_sum:
         game_phase = GamePhase.END_VICTORY
+        __end_game(window)
+
+
+def __end_game(window: Window):
+    global game_phase
+    text = "ROUND WON!"
+    if game_phase is GamePhase.END_LOSS:
+        text = "ROUND LOST!"
+
+    label = CrapsButton(master=window, width=250, height=50,
+                        text=text, text_type="bold", text_size=30,
+                        border_radius=5,
+                        opaque=False,
+                        callback=lambda event: __repeat_dice(window))
+    label.show_grid(column=1, row=5, pady=30)
+
+    retry_button = CrapsButton(master=window, width=300, height=50,
+                               text="RETRY", text_type="bold", text_size=30, text_position=(100, 15),
+                               border_radius=5,
+                               primary=False,
+                               callback=lambda event: start_game(window))
+    retry_button.show_grid(column=0, row=6, pady=30, padx=20)
+
+    main_menu_button = CrapsButton(master=window, width=300, height=50,
+                                   text="MAIN MENU", text_type="bold", text_size=30, text_position=(50, 15),
+                                   border_radius=5,
+                                   primary=False,
+                                   callback=lambda event: __back_to_main_menu(window))
+    main_menu_button.show_grid(column=0, row=7, pady=30, padx=20)
 
 
 def start_game(window: Window):
-    global first_init_dice, second_init_dice, result_init, dice_button
+    global first_init_dice, second_init_dice, result_init, dice_button, game_phase
+    game_phase = GamePhase.INITIAL_DICE
 
     window.clear_widgets()
 
