@@ -99,8 +99,8 @@ class DiceIndicator(Canvas):
             last_circle_location = x_position + self.height
 
             if indicator < len(self.attempts):
-                draw.text((x_position + 5, 0,
-                           x_position + self.height, self.height),
+                draw.text((x_position + padding, padding,
+                           x_position + self.height - padding, self.height - padding),
                           f"{self.attempts[indicator]}",
                           align=self.text_align,
                           fill="white",
