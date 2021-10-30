@@ -1,13 +1,6 @@
-import tkinter
-
 from ui.window import Window
-from storage.user_preferences import load_preferences
-from ui.theme.theme_repository import load_all_themes
 from ui.widget.cbutton import CrapsButton
-from tkinter import Frame
-from ui.theme.theme_repository import current_theme, all_themes
-from ui.theme.theme_properties import ThemeProperty
-from tkinter import SW
+from storage.stats_database import get_stats
 
 
 def open_main_menu(window: Window):
@@ -84,14 +77,20 @@ def open_statistics_page(window: Window):
                               opaque=False)
     title_label.show_grid(column=1, row=0, columnspan=2, pady=((window.get_height() / 8), 0))
 
+    stats = get_stats()
+
+    win_rate = 0.0
+    if stats['rounds_played'] > 0:
+        win_rate = stats['rounds_won'] / (stats["rounds_won"] + stats["rounds_lost"]) * 100
+
     __multiline_text(window, [
-        "Rounds played: 12",
-        "  ➥ Won: 6",
-        "  ➥ Lost: 6",
-        "  ➥ Win rate: 50%",
-        "Instant wins: 2",
-        "Instant losses: 3",
-        "Average throws/round: 5",
+        f"Rounds played: {stats['rounds_played']}",
+        f"  ➥ Won: {stats['rounds_won']}",
+        f"  ➥ Lost: {stats['rounds_lost']}",
+        f"  ➥ Win rate: {format(win_rate, '.1f')}%",
+        f"Instant wins: {stats['instant_wins']}",
+        f"Instant losses: {stats['instant_losses']}",
+        f"Average throws/round: {format(stats['average_throws'], '.1f')}",
     ], column=1, start_row=1)
 
     back_button = CrapsButton(master=window, width=300, height=40,
@@ -102,6 +101,7 @@ def open_statistics_page(window: Window):
                           pady=(0, window.get_height() / 8))
 
     window.update()
+
 
 def open_settings_menu(window: Window):
     window.clear_widgets()
