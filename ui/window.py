@@ -12,7 +12,8 @@ class Window(Tk):
         self.config(background=current_theme.get_color(ThemeProperty.PRIMARY_BACKGROUND))
         self.geometry(f"{width}x{height}")
         self.title(screen_name)
-        self.custom_grid_size = 0
+        self.custom_grid_rows = 0
+        self.custom_grid_columns = 0
 
     def open(self):
         self.mainloop()
@@ -22,15 +23,18 @@ class Window(Tk):
         for widget in widget_list:
             widget.destroy()
 
-    def configure_grid(self, grid_size):
-        self.custom_grid_size = grid_size
-        for i in range(grid_size):
-            self.rowconfigure(i, weight=1)
-            self.columnconfigure(i, weight=1)
+    def configure_grid(self, columns: int, rows: int):
+        self.custom_grid_rows = rows
+        self.custom_grid_columns = columns
+        for row in range(rows):
+            self.rowconfigure(row, weight=1)
+        for column in range(columns):
+            self.columnconfigure(column, weight=1)
 
     def reset_custom_grid(self):
-        for i in range(self.custom_grid_size):
+        for i in range(self.custom_grid_rows):
             self.rowconfigure(i, weight=0)
+        for i in range(self.custom_grid_columns):
             self.columnconfigure(i, weight=0)
 
     def get_height(self) -> int:
