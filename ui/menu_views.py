@@ -4,7 +4,7 @@ from storage.stats_database import get_stats
 
 
 def open_main_menu(window: Window):
-    import gamble.craps_game
+    import gamble.user_game
     window.clear_widgets()
     window.reset_custom_grid()
 
@@ -15,7 +15,7 @@ def open_main_menu(window: Window):
 
     play_button = CrapsButton(master=window, width=300, height=40,
                               text="PLAY!",
-                              callback=lambda event: gamble.craps_game.start_game(window))
+                              callback=lambda event: gamble.user_game.start_game(window))
     play_button.show_grid(column=1, row=1, columnspan=2, pady=(20, 10), padx=(40, 0))
 
     stats_button = CrapsButton(master=window, width=300, height=40,
