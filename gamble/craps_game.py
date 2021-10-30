@@ -116,7 +116,7 @@ def start_game(window: Window):
     window.clear_widgets()
 
     page_title = CrapsButton(master=window, width=150,
-                             text="CRAPS", text_type="bold", text_size=26,
+                             text="<< CRAPS", text_type="bold", text_size=26,
                              opaque=False,
                              callback=lambda event: __back_to_main_menu(window))
     page_title.show_grid(column=0, row=0, pady=20)
