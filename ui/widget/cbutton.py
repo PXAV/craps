@@ -1,4 +1,4 @@
-from tkinter import Canvas
+from tkinter import Canvas, Frame, Tk
 
 from PIL import Image, ImageTk, ImageDraw, ImageFont
 from ui.theme.theme_repository import current_theme
@@ -12,7 +12,7 @@ from ui.window import Window
 class CrapsButton(Canvas):
 
     def __init__(self,
-                 master: Window = None,
+                 master: Window or Frame or Tk = None,
                  width: int = 100,
                  height: int = 30,
                  border_radius: int = 17,
