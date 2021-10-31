@@ -4,7 +4,7 @@ from ui.theme.theme_properties import ThemeProperty
 from ui.window import Window
 from ui.widget.cbutton import CrapsButton
 from storage.stats_database import get_stats
-from gamble.automated_game import emulate_game
+from gamble.automated_game import emulate_game_async
 
 
 def open_main_menu(window: Window):
@@ -117,21 +117,20 @@ def open_statistics_page(window: Window):
 
     CrapsButton(master=frame, width=300, height=40,
                 text="Let computer play some rounds:",
-                opaque=False,
-                callback=lambda event: open_main_menu(window)).show_grid(column=0, row=1, padx=10)
+                opaque=False).show_grid(column=0, row=1, padx=10)
 
     CrapsButton(master=frame, width=80, height=40,
                 text="1",
-                callback=lambda event: emulate_game(1)).show_grid(column=1, row=1, padx=10)
+                callback=lambda event: emulate_game_async(1)).show_grid(column=1, row=1, padx=10)
     CrapsButton(master=frame, width=80, height=40,
                 text="10",
-                callback=lambda event: emulate_game(10)).show_grid(column=2, row=1, padx=10)
+                callback=lambda event: emulate_game_async(10)).show_grid(column=2, row=1, padx=10)
     CrapsButton(master=frame, width=80, height=40,
                 text="100",
-                callback=lambda event: emulate_game(100)).show_grid(column=3, row=1, padx=10)
+                callback=lambda event: emulate_game_async(100)).show_grid(column=3, row=1, padx=10)
     CrapsButton(master=frame, width=80, height=40,
                 text="1000",
-                callback=lambda event: emulate_game(1000)).show_grid(column=4, row=1, padx=10)
+                callback=lambda event: emulate_game_async(1000)).show_grid(column=4, row=1, padx=10)
 
     frame.grid(column=0, row=12, columnspan=3, pady=20)
 
