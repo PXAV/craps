@@ -101,7 +101,7 @@ def open_statistics_page(window: Window):
         f"  ➥ Win rate: {format(win_rate, '.1f')}% ({format(computer_win_rate, '.1f')}%)",
         f"Instant wins: {stats['instant_wins']} ({automated_stats['instant_wins']})",
         f"Instant losses: {stats['instant_losses']} ({automated_stats['instant_losses']})",
-        f"Average throws/round: {format(stats['average_throws'], '.1f')} ({automated_stats['average_throws']})",
+        f"Average throws/round: {format(stats['average_throws'], '.1f')} ({format(automated_stats['average_throws'], '.1f')})",
         f"",
         f"Note: The computer's statistics are gained from automated games",
     ], column=1, start_row=1)
