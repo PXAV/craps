@@ -1,6 +1,1 @@
-[meta]
-name = ""
-
-[settings]
-# auto, dark, light, <name>
-theme = "Craps Light"
+THEME = "Craps Light"

@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class UserPreference(Enum):
-    THEME = 'settings.theme'
+    THEME = 'theme'
 
     @staticmethod
     def values():

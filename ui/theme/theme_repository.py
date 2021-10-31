@@ -2,6 +2,7 @@ from __init__ import working_directory
 from ui.theme.theme import Theme
 from pathlib import Path
 import os
+from storage.user_preference import UserPreference
 
 all_themes = {}
 
@@ -20,12 +21,12 @@ def load_all_themes():
 
 
 def set_current_theme(name: str):
+    from storage.user_preferences import set_preference
     global current_theme
     if all_themes.get(name) is None:
         raise NameError(f'Cannot set theme {name}. Theme does not exist.')
-    print(f"setting theme to {name} -> {all_themes.get(name)} -> {all_themes.get(name).name}")
     current_theme = all_themes.get(name)
-    print(f"set current theme {current_theme.name}")
+    set_preference(UserPreference.THEME, name)
 
 
 def next_theme(window, button):

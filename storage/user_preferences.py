@@ -13,12 +13,22 @@ def get_preference(key: UserPreference):
     return preferences.get(UserPreference[key])
 
 
+def set_preference(key: UserPreference, value):
+    preferences[key] = value
+
+    writable_preferences = {}
+    for key in preferences.keys():
+        writable_preferences[key.name] = preferences[key]
+    with open(configuration.preference_file, "w") as file:
+        toml.dump(writable_preferences, file)
+
+
 def load_preferences():
     with open(configuration.preference_file, "r") as file:
         data = toml.loads(file.read())
 
     # get the ui theme chosen by the user
-    preferences[UserPreference.THEME] = data.get("settings").get("theme")
+    preferences[UserPreference.THEME] = data.get(UserPreference.THEME.name)
 
     # if the theme does not exist / is not loaded, the app will fall back to
     # auto-mode. Auto mode means that either the default dark or light theme
