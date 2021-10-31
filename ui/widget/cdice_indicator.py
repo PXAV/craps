@@ -1,7 +1,7 @@
 from tkinter import Canvas
 
 from PIL import Image, ImageTk, ImageDraw, ImageFont
-from ui.theme.theme_repository import current_theme
+from ui.theme.theme_repository import get_current_theme
 from ui.theme.theme_properties import ThemeProperty
 from configuration import normal_font, bold_font, thin_font
 from __init__ import working_directory
@@ -31,7 +31,7 @@ class DiceIndicator(Canvas):
         self.text_type = text_type
         self.text_size = text_size
 
-        self.background_color = current_theme.get_color(ThemeProperty.PRIMARY_BACKGROUND)
+        self.background_color = get_current_theme().get_color(ThemeProperty.PRIMARY_BACKGROUND)
         self.update_properties(width, height, self.attempts)
         self.config(background=self.background_color)
         self.raw_image = None
@@ -64,7 +64,7 @@ class DiceIndicator(Canvas):
             self.attempts = []
         else:
             self.attempts = attempts
-        self.background_color = current_theme.get_color(ThemeProperty.PRIMARY_BACKGROUND)
+        self.background_color = get_current_theme().get_color(ThemeProperty.PRIMARY_BACKGROUND)
 
         self.config(width=self.width)
         self.config(height=self.height)
@@ -90,11 +90,11 @@ class DiceIndicator(Canvas):
         last_circle_location = 0
         padding = 8
         for indicator in range(0, self.max_shown_attempts):
-            circle_color = current_theme.get_color(ThemeProperty.DICE_INDICATOR_ACTIVE)
+            circle_color = get_current_theme().get_color(ThemeProperty.DICE_INDICATOR_ACTIVE)
             x_position = self.height * (indicator + 1) + padding * (indicator + 1)
 
             if indicator + 1 > len(self.attempts):
-                circle_color = current_theme.get_color(ThemeProperty.SECONDARY_BACKGROUND)
+                circle_color = get_current_theme().get_color(ThemeProperty.SECONDARY_BACKGROUND)
 
             draw.ellipse((x_position, 0,
                           x_position + self.height, self.height),

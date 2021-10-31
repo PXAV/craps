@@ -1,5 +1,5 @@
 from tkinter import Frame
-from ui.theme.theme_repository import current_theme
+from ui.theme.theme_repository import get_current_theme
 from ui.theme.theme_properties import ThemeProperty
 from ui.window import Window
 from ui.widget.cbutton import CrapsButton
@@ -113,7 +113,7 @@ def open_statistics_page(window: Window):
     refresh_button.show_grid(column=1, row=11)
 
     frame = Frame(master=window, width=500, height=40,
-                  background=current_theme.get_color(ThemeProperty.PRIMARY_BACKGROUND))
+                  background=get_current_theme().get_color(ThemeProperty.PRIMARY_BACKGROUND))
 
     CrapsButton(master=frame, width=300, height=40,
                 text="Let computer play some rounds:",

@@ -1,7 +1,7 @@
 from tkinter import Canvas, Frame, Tk
 
 from PIL import Image, ImageTk, ImageDraw, ImageFont
-from ui.theme.theme_repository import current_theme
+from ui.theme.theme_repository import get_current_theme
 from ui.theme.theme_properties import ThemeProperty
 from configuration import normal_font, bold_font, thin_font
 from __init__ import working_directory
@@ -37,9 +37,9 @@ class CrapsButton(Canvas):
         self.text_position = text_position
         self.primary = primary
         self.opaque = opaque
-        self.background_color = current_theme.get_color(ThemeProperty.PRIMARY_BACKGROUND)
-        self.button_color = current_theme.get_color(
-            ThemeProperty.PRIMARY_BUTTON) if primary else current_theme.get_color(ThemeProperty.SECONDARY_BUTTON)
+        self.background_color = get_current_theme().get_color(ThemeProperty.PRIMARY_BACKGROUND)
+        self.button_color = get_current_theme().get_color(
+            ThemeProperty.PRIMARY_BUTTON) if primary else get_current_theme().get_color(ThemeProperty.SECONDARY_BUTTON)
         self.update_properties(width, height,
                                border_radius,
                                text, text_size, text_type, text_align, text_position,
@@ -92,9 +92,9 @@ class CrapsButton(Canvas):
         self.text_align = text_align
         self.text_position = text_position
         self.opaque = opaque
-        self.background_color = current_theme.get_color(ThemeProperty.PRIMARY_BACKGROUND)
-        self.button_color = current_theme.get_color(
-            ThemeProperty.PRIMARY_BUTTON) if primary else current_theme.get_color(ThemeProperty.SECONDARY_BUTTON)
+        self.background_color = get_current_theme().get_color(ThemeProperty.PRIMARY_BACKGROUND)
+        self.button_color = get_current_theme().get_color(
+            ThemeProperty.PRIMARY_BUTTON) if primary else get_current_theme().get_color(ThemeProperty.SECONDARY_BUTTON)
 
         self.config(width=self.width)
         self.config(height=self.height)
@@ -126,9 +126,17 @@ class CrapsButton(Canvas):
             if self.text_position:
                 xy = self.text_position
 
-            draw.text(xy, self.text, align=self.text_align, fill="white", font=ImageFont.truetype(
-                font=str(Path(f"{working_directory}/{font_to_load}")),
-                size=self.text_size)
+            text_color = "#ffffff"
+            if self.opaque:
+                text_color = get_current_theme().get_color(ThemeProperty.PRIMARY_TEXT)
+            else:
+                text_color = get_current_theme().get_color(ThemeProperty.SECONDARY_TEXT)
+
+            draw.text(xy, self.text, align=self.text_align,
+                      fill=text_color,
+                      font=ImageFont.truetype(
+                          font=str(Path(f"{working_directory}/{font_to_load}")),
+                          size=self.text_size)
                       )
         self.photo_image = ImageTk.PhotoImage(self.raw_image)
 

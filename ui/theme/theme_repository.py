@@ -23,7 +23,9 @@ def set_current_theme(name: str):
     global current_theme
     if all_themes.get(name) is None:
         raise NameError(f'Cannot set theme {name}. Theme does not exist.')
+    print(f"setting theme to {name} -> {all_themes.get(name)} -> {all_themes.get(name).name}")
     current_theme = all_themes.get(name)
+    print(f"set current theme {current_theme.name}")
 
 
 def get_current_theme() -> Theme:

@@ -1,5 +1,5 @@
 from tkinter import *
-from ui.theme.theme_repository import current_theme
+from ui.theme.theme_repository import get_current_theme
 from ui.theme.theme_properties import ThemeProperty
 
 
@@ -9,7 +9,7 @@ class Window(Tk):
         super().__init__()
         self.width = width
         self.height = height
-        self.config(background=current_theme.get_color(ThemeProperty.PRIMARY_BACKGROUND))
+        self.config(background=get_current_theme().get_color(ThemeProperty.PRIMARY_BACKGROUND))
         self.geometry(f"{width}x{height}")
         self.title(screen_name)
         self.custom_grid_rows = 0
