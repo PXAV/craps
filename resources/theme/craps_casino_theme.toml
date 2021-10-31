@@ -1,0 +1,18 @@
+[meta]
+name = "Craps Casino"
+author = "pxav"
+version = "1.0"
+description = "A casino-styled color palette"
+
+[colors]
+primary_background = "#083805"
+secondary_background = "#006312"
+
+primary_text = "#c4c4c4"
+secondary_text = "#c4c4c4"
+
+dice_indicator_active = "#5e0e0e"
+
+primary_button = "#521212"
+secondary_button = "#575135"
+
