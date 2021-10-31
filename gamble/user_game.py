@@ -39,7 +39,7 @@ def __initial_dice(window: Window):
         add_game(automated=False, won=True, instant=True, throws=1)
         dice_button.update_text("YOU WIN!")
         __end_game(window)
-    elif first_dice_sum == 3 or first_dice_sum == 3 or first_dice_sum == 12:
+    elif first_dice_sum == 2 or first_dice_sum == 3 or first_dice_sum == 12:
         dice_button.update_text("YOU LOSE!")
         game_phase = GamePhase.END_LOSS
         add_game(automated=False, won=False, instant=True, throws=1)
