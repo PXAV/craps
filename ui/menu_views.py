@@ -1,6 +1,10 @@
+from tkinter import Frame
+from ui.theme.theme_repository import current_theme
+from ui.theme.theme_properties import ThemeProperty
 from ui.window import Window
 from ui.widget.cbutton import CrapsButton
 from storage.stats_database import get_stats
+from gamble.automated_game import emulate_game
 
 
 def open_main_menu(window: Window):
@@ -99,16 +103,43 @@ def open_statistics_page(window: Window):
         f"Instant losses: {stats['instant_losses']} ({automated_stats['instant_losses']})",
         f"Average throws/round: {format(stats['average_throws'], '.1f')} ({automated_stats['average_throws']})",
         f"",
-        f"Note: The computer's statistics are gained from automated games ",
+        f"Note: The computer's statistics are gained from automated games",
     ], column=1, start_row=1)
 
+    refresh_button = CrapsButton(master=window, width=300, height=40,
+                                 text="Refresh Statistics",
+                                 primary=False,
+                                 callback=lambda event: open_statistics_page(window))
+    refresh_button.show_grid(column=1, row=11)
+
+    frame = Frame(master=window, width=500, height=40,
+                  background=current_theme.get_color(ThemeProperty.PRIMARY_BACKGROUND))
+
+    CrapsButton(master=frame, width=300, height=40,
+                text="Let computer play some rounds:",
+                opaque=False,
+                callback=lambda event: open_main_menu(window)).show_grid(column=0, row=1, padx=10)
+
+    CrapsButton(master=frame, width=80, height=40,
+                text="1",
+                callback=lambda event: emulate_game(1)).show_grid(column=1, row=1, padx=10)
+    CrapsButton(master=frame, width=80, height=40,
+                text="10",
+                callback=lambda event: emulate_game(10)).show_grid(column=2, row=1, padx=10)
+    CrapsButton(master=frame, width=80, height=40,
+                text="100",
+                callback=lambda event: emulate_game(100)).show_grid(column=3, row=1, padx=10)
+    CrapsButton(master=frame, width=80, height=40,
+                text="1000",
+                callback=lambda event: emulate_game(1000)).show_grid(column=4, row=1, padx=10)
+
+    frame.grid(column=0, row=12, columnspan=3, pady=20)
 
     back_button = CrapsButton(master=window, width=300, height=40,
-                              text="Done",
+                              text="<< BACK",
+                              text_type="bold",
                               callback=lambda event: open_main_menu(window))
-    back_button.show_grid(column=1, row=12,
-                          padx=(window.get_width() / 20, 0),
-                          pady=(0, window.get_height() / 8))
+    back_button.show_grid(column=0, row=14, pady=20, padx=20)
 
     window.update()
 
