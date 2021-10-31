@@ -1,5 +1,5 @@
 from tkinter import Frame
-from ui.theme.theme_repository import get_current_theme
+from ui.theme.theme_repository import get_current_theme, next_theme, previous_theme
 from ui.theme.theme_properties import ThemeProperty
 from ui.window import Window
 from ui.widget.cbutton import CrapsButton
@@ -145,20 +145,59 @@ def open_statistics_page(window: Window):
 
 def open_settings_menu(window: Window):
     window.clear_widgets()
+    window.config(background=get_current_theme().get_color(ThemeProperty.PRIMARY_BACKGROUND))
 
     CrapsButton(master=window,
                 height=40, width=200,
                 text_size=24,
                 text_type="bold",
-                opaque=True,
-                text="UI THEME").show_grid(column=1, row=0)
+                opaque=False,
+                text="Settings").show_grid(column=0, row=0)
+    CrapsButton(master=window,
+                height=40, width=200,
+                text_size=24,
+                text_type="bold",
+                opaque=False,
+                text="UI Theme").show_grid(column=0, row=1)
+
+    theme_changer_frame = Frame(master=window, width=700, height=50,
+                                background=get_current_theme().get_color(ThemeProperty.PRIMARY_BACKGROUND))
+
+    previous_theme_button = CrapsButton(master=theme_changer_frame,
+                                        height=40, width=50,
+                                        text_size=24,
+                                        text_type="bold",
+                                        text_position=(20, 10),
+                                        text="<",
+                                        callback=lambda event: previous_theme(window, theme_button))
+    previous_theme_button.show_grid(column=0, row=0)
+
+    theme_button = CrapsButton(master=theme_changer_frame,
+                               height=40, width=300,
+                               text_size=24,
+                               text_type="bold",
+                               text_position=(25, 10),
+                               primary=False,
+                               text=get_current_theme().name)
+    theme_button.show_grid(column=1, row=0, padx=10)
+
+    next_theme_button = CrapsButton(master=theme_changer_frame,
+                                    height=40, width=50,
+                                    text_size=24,
+                                    text_type="bold",
+                                    text_position=(20, 10),
+                                    text=">",
+                                    callback=lambda event: next_theme(window, theme_button))
+    next_theme_button.show_grid(column=2, row=0)
+
+    theme_changer_frame.grid(column=0, columnspan=3, row=2, padx=20)
 
     back_button = CrapsButton(master=window, width=300, height=40,
                               text="BACK",
                               callback=lambda event: open_main_menu(window))
-    back_button.show_grid(column=1, row=9,
-                          padx=(window.get_width() / 20, 0),
-                          pady=(0, window.get_height() / 12))
+    back_button.show_grid(column=0, row=9,
+                          padx=20,
+                          pady=20)
 
     window.update()
 

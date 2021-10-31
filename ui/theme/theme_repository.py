@@ -28,5 +28,42 @@ def set_current_theme(name: str):
     print(f"set current theme {current_theme.name}")
 
 
+def next_theme(window, button):
+    from ui.menu_views import open_settings_menu
+    indexed_themes = __index_themes()
+    values = list(indexed_themes.values())
+    current_theme_index = values.index(current_theme.name)
+    if len(values) > current_theme_index + 1:
+        set_current_theme(values[current_theme_index + 1])
+        button.update_text(values[current_theme_index + 1])
+    else:
+        set_current_theme(values[0])
+        button.update_text(values[0])
+    open_settings_menu(window)
+
+
+def previous_theme(window, button):
+    from ui.menu_views import open_settings_menu
+    indexed_themes = __index_themes()
+    values = list(indexed_themes.values())
+    current_theme_index = values.index(current_theme.name)
+    if current_theme_index - 1 <= 0:
+        set_current_theme(values[current_theme_index - 1])
+        button.update_text(values[current_theme_index - 1])
+    else:
+        set_current_theme(values[0])
+        button.update_text(values[0])
+    open_settings_menu(window)
+
+
 def get_current_theme() -> Theme:
     return current_theme
+
+
+def __index_themes() -> dict:
+    index_dict = {}
+    index = 0
+    for theme_name in all_themes.keys():
+        index_dict[index] = theme_name
+        index += 1
+    return index_dict
