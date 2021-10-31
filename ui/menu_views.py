@@ -78,25 +78,35 @@ def open_statistics_page(window: Window):
     title_label.show_grid(column=1, row=0, columnspan=2, pady=((window.get_height() / 8), 0))
 
     stats = get_stats()
+    automated_stats = get_stats(automated=True)
 
     win_rate = 0.0
     if stats['rounds_played'] > 0:
         win_rate = stats['rounds_won'] / (stats["rounds_won"] + stats["rounds_lost"]) * 100
 
+    computer_win_rate = 0.0
+    if automated_stats['rounds_played'] > 0:
+        computer_win_rate = automated_stats['rounds_won'] / (automated_stats["rounds_won"]
+                                                             + automated_stats["rounds_lost"]) * 100
+
     __multiline_text(window, [
-        f"Rounds played: {stats['rounds_played']}",
-        f"  ➥ Won: {stats['rounds_won']}",
-        f"  ➥ Lost: {stats['rounds_lost']}",
-        f"  ➥ Win rate: {format(win_rate, '.1f')}%",
-        f"Instant wins: {stats['instant_wins']}",
-        f"Instant losses: {stats['instant_losses']}",
-        f"Average throws/round: {format(stats['average_throws'], '.1f')}",
+        f"Your statistics (computer's statistics)",
+        f"Rounds played: {stats['rounds_played']} ({automated_stats['rounds_played']})",
+        f"  ➥ Won: {stats['rounds_won']} ({automated_stats['rounds_won']})",
+        f"  ➥ Lost: {stats['rounds_lost']} ({automated_stats['rounds_lost']})",
+        f"  ➥ Win rate: {format(win_rate, '.1f')}% ({format(computer_win_rate, '.1f')}%)",
+        f"Instant wins: {stats['instant_wins']} ({automated_stats['instant_wins']})",
+        f"Instant losses: {stats['instant_losses']} ({automated_stats['instant_losses']})",
+        f"Average throws/round: {format(stats['average_throws'], '.1f')} ({automated_stats['average_throws']})",
+        f"",
+        f"Note: The computer's statistics are gained from automated games ",
     ], column=1, start_row=1)
+
 
     back_button = CrapsButton(master=window, width=300, height=40,
                               text="Done",
                               callback=lambda event: open_main_menu(window))
-    back_button.show_grid(column=1, row=9,
+    back_button.show_grid(column=1, row=12,
                           padx=(window.get_width() / 20, 0),
                           pady=(0, window.get_height() / 8))
 
