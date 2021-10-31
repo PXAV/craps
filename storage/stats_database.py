@@ -29,10 +29,14 @@ def connect_database():
 def add_game(automated: bool, won: bool, instant: bool, throws: int):
     global cursor
 
-    cursor.execute(f"INSERT INTO rounds (won, instant, throws) VALUES ("
-                   f"{1 if won else 0}, "
-                   f"{1 if instant else 0}, "
-                   f"{throws})")
+    query_index = 1 if automated else 0
+    insert_query = ("INSERT INTO rounds (won, instant, throws) VALUES (?, ?, ?)",
+                    "INSERT INTO automated_rounds (won, instant, throws) VALUES (?, ?, ?)")
+
+    cursor.execute(insert_query[query_index],
+                   (1 if won else 0,
+                   1 if instant else 0,
+                   throws))
     connection.commit()
 
 
