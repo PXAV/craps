@@ -1,3 +1,7 @@
+"""
+This file contains functions, which display the
+"""
+
 from tkinter import Frame
 from ui.theme.theme_repository import get_current_theme, next_theme, previous_theme
 from ui.theme.theme_properties import ThemeProperty
@@ -8,6 +12,11 @@ from gamble.automated_game import emulate_game_async
 
 
 def open_main_menu(window: Window):
+    """
+    Draws the main menu widgets to the given window.
+
+    :param window: The window to draw the main menu widgets to.
+    """
     import gamble.user_game
     window.clear_widgets()
     window.reset_custom_grid()
@@ -47,6 +56,10 @@ def open_main_menu(window: Window):
 
 
 def open_rules_menu(window: Window):
+    """
+    Opens the rule page on the current window.
+    :param window: The window to open the rules menu on.
+    """
     window.clear_widgets()
 
     title_label = CrapsButton(master=window, width=300, height=40,
@@ -74,6 +87,11 @@ def open_rules_menu(window: Window):
 
 
 def open_statistics_page(window: Window):
+    """
+    Opens the statistics page to the given window.
+
+    :param window: The window to open the page on.
+    """
     window.clear_widgets()
 
     title_label = CrapsButton(master=window, width=300, height=40,
@@ -144,6 +162,11 @@ def open_statistics_page(window: Window):
 
 
 def open_settings_menu(window: Window):
+    """
+    Opens the settings menu to the given window.
+
+    :param window: The window to open the statistics page to.
+    """
     window.clear_widgets()
     window.config(background=get_current_theme().get_color(ThemeProperty.PRIMARY_BACKGROUND))
 
@@ -203,6 +226,14 @@ def open_settings_menu(window: Window):
 
 
 def __multiline_text(window: Window, text_lines: list, column: int = 1, start_row: int = 1):
+    """
+    Draws a multi-lined text on the given window.
+
+    :param window:      The window to draw the text on.
+    :param text_lines:  The actual text to draw. Each list item represents a new line.
+    :param column:      The column to display the text in.
+    :param start_row:   From which row to start drawing from. The row index is incremented by one with each line.
+    """
     index = 0
     for line in text_lines:
         CrapsButton(master=window,
