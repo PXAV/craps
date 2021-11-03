@@ -1,3 +1,11 @@
+"""
+This file manages the statistics collected while playing the game.
+They can be viewed at any time by opening the statistics page in the main
+menu.
+
+
+"""
+
 from sqlite3 import Cursor, Connection, connect
 from configuration import stats_database
 
@@ -9,6 +17,11 @@ class DatabaseConnection:
         self.__connect_database()
 
     def __connect_database(self):
+        """
+        Establish a new connection to the statistics database.
+
+        """
+
         self.connection = connect(stats_database)
         self.cursor = self.connection.cursor()
 
@@ -27,24 +40,34 @@ class DatabaseConnection:
         self.connection.commit()
 
     def add_game(self, automated: bool, won: bool, instant: bool, throws: int):
+        """
+        Adds a new game to the statistics and saves it in the database.
+        :param automated:   True if the game was played by the computer, False if played by a normal user.
+        :param won:         True if the game was won.
+        :param instant:     True if the game was won or lost instantly. An instant win/loss occurs,
+                            when the decision is already made on the first dice event.
+        :param throws:      The amount of attempts the user needed to complete the round.
+        """
+
         query_index = 1 if automated else 0
         insert_query = ("INSERT INTO rounds (won, instant, throws) VALUES (?, ?, ?)",
                         "INSERT INTO automated_rounds (won, instant, throws) VALUES (?, ?, ?)")
 
         self.cursor.execute(insert_query[query_index],
-                            (1 if won else 0,
+                            (1 if won else 0,  # convert booleans to integers to align with SQLite data types
                              1 if instant else 0,
                              throws))
         self.connection.commit()
 
     def get_stats(self, automated: bool = False) -> dict:
         """
-            Compiles a dictionary containing all statistics which are relevant for the
-            statistics page accessible from the main menu. The keys will look as follows:
-            "rounds_played", "rounds_won", "rounds_lost", "win_rate", "average_throws", "instant_losses", "instant_wins"
+        Compiles a dictionary containing all statistics which are relevant for the
+        statistics page accessible from the main menu. The keys will look as follows:
+        "rounds_played", "rounds_won", "rounds_lost", "win_rate", "average_throws", "instant_losses", "instant_wins"
 
-            :return:
-            """
+        :param automated    Whether the computer's statistics (True) or player's statistics (False) should be queried.
+        :return:            a dictionary containing all relevant statistics
+        """
         query_index = 1 if automated else 0
         output = {}
 
