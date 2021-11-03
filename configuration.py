@@ -1,3 +1,7 @@
+"""
+Configure some application parameters
+"""
+
 preference_file = 'resources/user_preferences.toml'
 stats_database = 'resources/stats.db'
 

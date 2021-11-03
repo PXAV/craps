@@ -1,3 +1,8 @@
+"""
+This is the main file of the project. Run this file to
+properly start the application with all features.
+"""
+
 from ui.window import Window
 
 from storage.user_preferences import load_preferences
