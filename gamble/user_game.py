@@ -5,9 +5,17 @@ from gamble.game_phase import GamePhase
 from random import randint
 from storage.stats_database import add_game
 
+# the current game phase. Used to validate actions from every function.
 game_phase = GamePhase.INITIAL_DICE
+
+# saves the dice sum achieved on the first try
+# this is used to compare it with the numbers achieved in
+# draw dicing later. If the number equals this number, the
+# game is won.
 first_dice_sum: int = 0
 
+# saves all widgets buttons with dynamic properties, so that they
+# can be modified from other functions later.
 first_init_dice: CrapsButton = CrapsButton(master=None)
 second_init_dice: CrapsButton = CrapsButton(master=None)
 result_init: CrapsButton = CrapsButton(master=None)
@@ -17,11 +25,23 @@ dice_indicator: DiceIndicator = DiceIndicator(master=None)
 
 
 def __back_to_main_menu(window: Window):
+    """
+    Opens the main menu page, which will clear all widgets currently visible.
+
+    :param window: The window to draw the main menu on.
+    :return:
+    """
     from ui.menu_views import open_main_menu
     open_main_menu(window)
 
 
 def __initial_dice(window: Window):
+    """
+    Draws all inti
+
+    :param window:
+    :return:
+    """
     global game_phase, first_dice_sum
     if game_phase is not GamePhase.INITIAL_DICE:
         return
