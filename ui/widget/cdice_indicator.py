@@ -10,6 +10,15 @@ from ui.window import Window
 
 
 class DiceIndicator(Canvas):
+    """
+    Represents a custom tkinter widget visualizing the dicing
+    progress while playing the game as a normal user. This is only
+    the case when the first dice is a draw and the user falls into the
+    state of having to dice infinitely until the game ends.
+
+    Each attempt is represented by a bubble, which shows the dice sum
+    achieved in that attempt.
+    """
 
     def __init__(self,
                  master: Window = None,
@@ -21,6 +30,19 @@ class DiceIndicator(Canvas):
                  text_align: str = "left",
                  text_type: str = "bold",
                  **kw):
+        """
+        Initializes a new dice indicator.
+
+        :param master:                  The window or frame to display the indicator in.
+        :param width:                   The total width in pixels
+        :param height:                  The total height in pixels
+        :param initial_attempts:        How many attempts to show when the indicator is displayed for the first time.
+        :param max_shown_attempts:      How many attempts to show at max.
+        :param text_size:               Font size of the text showing the total amount of attempts
+        :param text_align:              Text alignment of attempt amount text (left/right)
+        :param text_type:               Text type of attempt amount text (bold/thin/normal)
+        :param kw:                      Arguments for tkinter parent widget
+        """
         super().__init__(master, width=width, height=height, bd=0, highlightthickness=0, **kw)
         self.window = master
         self.width = width
@@ -39,17 +61,42 @@ class DiceIndicator(Canvas):
         self.__draw_attempts()
 
     def show_pack(self, *args, **kwargs):
+        """
+        Finally displays the indicator in the given master window using
+        tkinter's pack manager.
+
+        :param args:    arguments for master.pack() method
+        :param kwargs:  arguments for master.pack() method
+        """
         self.pack(*args, **kwargs)
         self.__apply_image()
 
     def show_grid(self, *args, **kwargs):
+        """
+        Finally displays the indicator in the given master window using
+        tkinter's grid manager.
+
+        :param args:    arguments for master.grid() method
+        :param kwargs:  arguments for master.grid() method
+        """
         self.grid(*args, **kwargs)
         self.__apply_image()
 
     def get_attempts(self) -> list:
+        """
+        Gets a list of all attempts displayed by this indicator.
+        An attempt is represented by the dice sum it generated.
+
+        :return: A list with all attempts shown by this indicator.
+        """
         return self.attempts
 
     def add_attempt(self, dice_sum: int):
+        """
+
+        :param dice_sum:
+        :return:
+        """
         self.attempts.append(dice_sum)
         self.update_properties(self.width, self.height, self.attempts)
 
@@ -87,12 +134,18 @@ class DiceIndicator(Canvas):
         elif self.text_type == "bold":
             font_to_load = bold_font
 
+        # the latest x location where an attempt circle has been drawn
         last_circle_location = 0
+
+        # the padding between attempt circles along the x-axis
         padding = 8
+
+        # generate as many circles as there are attempts to display
         for indicator in range(0, self.max_shown_attempts):
             circle_color = get_current_theme().get_color(ThemeProperty.DICE_INDICATOR_ACTIVE)
             x_position = self.height * (indicator + 1) + padding * (indicator + 1)
 
+            # check if
             if indicator + 1 > len(self.attempts):
                 circle_color = get_current_theme().get_color(ThemeProperty.SECONDARY_BACKGROUND)
 

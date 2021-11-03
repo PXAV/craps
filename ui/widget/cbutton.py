@@ -10,6 +10,17 @@ from ui.window import Window
 
 
 class CrapsButton(Canvas):
+    """
+    This class represents a reusable button widget for tkinter GUIs.
+    Although it is used as a button, it extends from the canvas class.
+    This is done to have more flexibility in custom styles. Craps simply
+    draws an image on the canvas and makes itself independent from
+    the different operating system button styles.
+
+    When setting the opaque attribute to false, you can remove the button
+    background and use it as a kind of clickable label. The class also offers
+    seamless integration into the theming system
+    """
 
     def __init__(self,
                  master: Window or Frame or Tk = None,
@@ -18,13 +29,31 @@ class CrapsButton(Canvas):
                  border_radius: int = 17,
                  text: str = None,
                  text_size: int = 14,
-                 text_type: str = "normal",  # bold, normal, thin
+                 text_type: str = "normal",
                  text_align: str = "left",
                  text_position: tuple = (),
                  primary: bool = True,
                  opaque: bool = True,
                  callback: callable = None,
                  **kw):
+        """
+        Creates a new CrapsButton instance. Most of these parameters can be changed
+        and updated later.
+
+        :param master:          the parent to draw the button on (either a window or a frame)
+        :param width:           width of button in pixels
+        :param height:          height of button in pixels
+        :param border_radius:   border radius of the background rectangle (determines "roundness")
+        :param text:            text to display on the button
+        :param text_size:       font size to use
+        :param text_type:       font style to use (bold/normal/thin)
+        :param text_align:      text alignment within the button (left/right)
+        :param text_position:   text position inside the button
+        :param primary:         which color to use for the button background
+        :param opaque:          whether the background rectangle should be drawn
+        :param callback:        command to run when the button is left-clicked.
+        :param kw:
+        """
         super().__init__(master, width=width, height=height, bd=0, highlightthickness=0, **kw)
         self.window = master
         self.width = width
@@ -55,20 +84,47 @@ class CrapsButton(Canvas):
             self.bind("<Button-1>", callback)
 
     def show_pack(self, *args, **kwargs):
+        """
+        Finally displays the button in the given master window using
+        tkinter's pack manager.
+
+        :param args:    arguments for master.pack() method
+        :param kwargs:  arguments for master.pack() method
+        """
         self.pack(*args, **kwargs)
         self.__apply_image()
 
     def show_grid(self, *args, **kwargs):
+        """
+        Finally displays the button in the given master window using
+        tkinter's grid manager.
+
+        :param args:    arguments for master.grid() method
+        :param kwargs:  arguments for master.grid() method
+        """
         self.grid(*args, **kwargs)
         self.__apply_image()
 
     def get_width(self) -> int:
+        """
+        Gets the width of the button in pixels.
+        :return: width of button in pixels.
+        """
         return self.width
 
     def get_height(self) -> int:
+        """
+        Gets the height of the button in pixels.
+        :return: height of button in pixels.
+        """
         return self.height
 
     def update_text(self, new_text):
+        """
+        Immediately updates the text in the button to the given string.
+
+        :param new_text: The new text to display
+        """
         self.update_properties(self.width, self.height, self.border_radius, new_text, self.text_size,
                                self.text_type, self.text_align, self.text_position, self.primary, self.opaque)
 
@@ -104,6 +160,12 @@ class CrapsButton(Canvas):
         self.update()
 
     def __draw_text(self, new_text):
+        """
+        Draws an image on the tkinter canvas containing the text.
+
+        :param new_text: The text to draw on the button.
+        """
+
         self.text = new_text
         self.raw_image = Image.new(
             "RGB",
@@ -112,6 +174,7 @@ class CrapsButton(Canvas):
         )
         draw = ImageDraw.Draw(self.raw_image)
 
+        # only draw a rounded rectangle as background if the button is opaque.
         if self.opaque:
             draw.rounded_rectangle((0, 0, self.width, self.height), radius=self.border_radius, fill=self.button_color)
 
@@ -126,7 +189,7 @@ class CrapsButton(Canvas):
             if self.text_position:
                 xy = self.text_position
 
-            text_color = "#ffffff"
+            text_color: str
             if self.opaque:
                 text_color = get_current_theme().get_color(ThemeProperty.PRIMARY_TEXT)
             else:
@@ -141,4 +204,7 @@ class CrapsButton(Canvas):
         self.photo_image = ImageTk.PhotoImage(self.raw_image)
 
     def __apply_image(self):
+        """
+        Applies the image contained by the photo_image attribute to the button.
+        """
         self.create_image(int(self["width"]) / 2, int(self["height"]) / 2, image=self.photo_image)
