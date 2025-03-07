@@ -1,3 +1,6 @@
+# Important Notice!
+**This project is no longer maintained.**
+
 # Craps
 > Developed by pxav (c) 2021
 
